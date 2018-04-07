@@ -9,18 +9,27 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
     public TextView hora;
     public TextView setTime;
     public EditText description;
-    public Button config;
+    public ImageButton config;
 
     public int mHour,mMinutes;
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        mHour = hourOfDay;
+        mMinutes = minute;
+        hora.setText(mHour + " : " + mMinutes);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM)
                         .putExtra(AlarmClock.EXTRA_MESSAGE, description.getText().toString())
+                        .putExtra(AlarmClock.EXTRA_HOUR,mHour)
+                        .putExtra(AlarmClock.EXTRA_MINUTES,mMinutes)
                         .putExtra(AlarmClock.EXTRA_SKIP_UI,true);
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
@@ -46,7 +57,11 @@ public class MainActivity extends AppCompatActivity {
         setTime.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(), "time picker");
             }
         });
+
+
     }
 }

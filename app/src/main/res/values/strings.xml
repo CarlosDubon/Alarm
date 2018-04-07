@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Alarm</string>
+    <string name="text_main">Configurar Alarma</string>
+    <string name="text_hora">Hora</string>
+    <string name="text_minutos">Minutos</string>
+    <string name="text_configurar">Configurar</string>
+    <string name="text_descripcion">Descripción</string>
+</resources>
